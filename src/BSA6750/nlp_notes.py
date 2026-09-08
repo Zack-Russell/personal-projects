@@ -1,5 +1,12 @@
-from textblob import TextBlob 
 from pathlib import Path
+from operator import itemgetter
+from textblob import TextBlob 
+import nltk
+from nltk.corpus import stopwords
+from wordcloud import WordCloud
+import pandas as pd
+import imageio.v2 as imageio
+import matplotlib.pyplot as plt
 
 # This ties into work in my master's program, though is rudementary compared to what might 
 # be introduced in production enviornments
@@ -104,4 +111,21 @@ print(romeo)
 juliet_case = shakespeare_blob.words.count("JULIET", case_sensitive = True)
 romeo_case = shakespeare_blob.words.count("ROMEO", case_sensitive = True)
 '''
+
+
+
+# Stopwords, common words that don't convey meaning
+# We filter them out to stop them from overpowering more meaningful words in processing
+
+# nltk.download('stopwords') -- gotta run this once
+stop_words = stopwords.words("english")
+
+
+word_list = [word for word in blob.words if word not in stop_words]
+print(word_list)
+
+# unique words contained in the blob. returned as a key value pair.
+items = blob.word_counts.items()
+# no stop words, pythonic
+items = [item for item in items if item[0] not in stop_words]
 
